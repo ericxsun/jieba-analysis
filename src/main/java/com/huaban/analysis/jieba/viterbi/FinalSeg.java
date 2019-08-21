@@ -1,21 +1,21 @@
 package com.huaban.analysis.jieba.viterbi;
 
+import com.huaban.analysis.jieba.CharacterUtil;
+import com.huaban.analysis.jieba.Node;
+import com.huaban.analysis.jieba.Pair;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Vector;
 import java.util.regex.Matcher;
-import java.util.Collections;
-
-import com.huaban.analysis.jieba.CharacterUtil;
-import com.huaban.analysis.jieba.Pair;
-import com.huaban.analysis.jieba.Node;
+import org.apache.log4j.Logger;
 
 
 public class FinalSeg {
@@ -27,6 +27,7 @@ public class FinalSeg {
     private static Map<Character, Map<Character, Double>> trans;
     private static Map<Character, char[]> prevStatus;
     private static Double MIN_FLOAT = -3.14e100;;
+    private static final Logger logger = Logger.getLogger(FinalSeg.class.getName());
 
 
     private FinalSeg() {
@@ -92,7 +93,7 @@ public class FinalSeg {
             }
         }
         catch (IOException e) {
-            System.err.println(String.format(Locale.getDefault(), "%s: load model failure!", PROB_EMIT));
+            logger.error(String.format(Locale.getDefault(), "%s: load model failure!", PROB_EMIT));
         }
         finally {
             try {
@@ -100,10 +101,10 @@ public class FinalSeg {
                     is.close();
             }
             catch (IOException e) {
-                System.err.println(String.format(Locale.getDefault(), "%s: close failure!", PROB_EMIT));
+                logger.error(String.format(Locale.getDefault(), "%s: close failure!", PROB_EMIT));
             }
         }
-        System.out.println(String.format(Locale.getDefault(), "model load finished, time elapsed %d ms.",
+        logger.debug(String.format(Locale.getDefault(), "model load finished, time elapsed %d ms.",
             System.currentTimeMillis() - s));
     }
 

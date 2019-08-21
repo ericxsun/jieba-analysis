@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
+import org.apache.log4j.Logger;
 import com.huaban.analysis.jieba.JiebaSegmenter;
 
 /**
@@ -25,6 +25,8 @@ public class TFIDFAnalyzer
 	static HashMap<String,Double> idfMap;
 	static HashSet<String> stopWordsSet;
 	static double idfMedian;
+	private static final Logger logger = Logger.getLogger(TFIDFAnalyzer.class.getName());
+
 	
 	/**
 	 * tfidf分析方法
@@ -174,7 +176,7 @@ public class TFIDFAnalyzer
 		TFIDFAnalyzer tfidfAnalyzer=new TFIDFAnalyzer();
 		List<Keyword> list=tfidfAnalyzer.analyze(content,topN);
 		for(Keyword word:list)
-			System.out.print(word.getName()+":"+word.getTfidfvalue()+",");
+			logger.debug(word.getName()+":"+word.getTfidfvalue()+",");
 	}
 }
 
